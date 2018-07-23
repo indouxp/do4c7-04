@@ -1,0 +1,39 @@
+---
+
+  - name: brctl show                        仮想ブリッジの確認
+    shell: brctl show | grep "^br0"
+    ignore_error: True
+    register: brctl_show
+    failed_when: brctl_show.rc not in [0, 1]
+  - name:                                   表示
+    debug: var=brctl_show.rc
+
+  - name: brctl addbr br0                   仮想ブリッジ作成(未定義時)
+    shell: brctl addbr br0
+    when: brctl_show.rc in [1]
+  - name: brctl show                        仮想ブリッジの確認
+    shell: brctl show | grep "^br0"
+    ignore_error: True
+    register: brctl_show
+    failed_when: brctl_show.rc not in [0, 1]
+  - name:                                   表示
+    debug: var=brctl_show.rc
+
+  - name: brctl show                        仮想ブリッジに物理NIC(eth0)が接続しているかの確認
+    shell: brctl show | grep "^br0" | grep "eth0"
+    ignore_error: True
+    register: brctl_show
+    failed_when: brctl_show.rc not in [0, 1]
+  - name:                                   表示
+    debug: var=brctl_show.rc
+
+  - name: brctl addif br0 eth0              仮想ブリッジへの物理NIC接続
+    shell: brctl addif br0 eth0
+    when: brctl_show.rc in [1]
+  - name: brctl show                        仮想ブリッジに物理NIC(eth0)が接続しているかの確認
+    shell: brctl show | grep "^br0" | grep "eth0"
+    ignore_error: True
+    register: brctl_show
+    failed_when: brctl_show.rc not in [0, 1]
+  - name:                                   表示
+    debug: var=brctl_show.rc

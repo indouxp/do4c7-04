@@ -1,0 +1,6 @@
+<network>
+  <name>host_only</name>
+  <bridge name='host_only0' stp='on' delay='0' />
+  <ip address='192.168.9.1' netmasks='255.255.255.0'>
+  </ip>
+</network>

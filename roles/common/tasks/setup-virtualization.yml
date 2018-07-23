@@ -1,0 +1,22 @@
+---
+
+  - name: yum group-install
+    yum: name="{{ item }}" state=present
+    with_items:
+      - "@Virtualization Client"
+      - "@Virtualization Platform"
+      - "@Virtualization Tools"
+      - "@^gnome-desktop-environment"
+  - name: restart libvirtd
+    command: systemctl restart libvirtd
+  - name: enable libvirtd
+    command: systemctl enable libvirtd
+  - name: wget vagrant
+    command: wget https://releases.hashicorp.com/vagrant/2.0.3/vagrant_2.0.3_x86_64.rpm creates=./vagrant_2.0.3_x86_64.rpm
+  - name: yum localinstall vagrant
+    yum: 
+      name: ./vagrant_2.0.3_x86_64.rpm
+      state: present
+  - name: vagrant plugin install vagrant-digitalocean
+    command: vagrant plugin install vagrant-digitalocean
+    

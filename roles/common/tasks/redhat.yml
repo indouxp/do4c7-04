@@ -1,0 +1,40 @@
+---
+
+  - name: rhel-server.isoのコピー
+    copy:
+      src: roles/common/files/rhel-server-7.3-x86_64-dvd.iso
+      dest: /tmp
+      mode: 0444
+
+  - name: mkdir kvm ワークディレクトリの作成
+    file:
+      dest: /root/kvm
+      state: directory
+
+  - name: chk-sha256sum.sh ファイルハッシュの確認
+    copy:
+      src: roles/common/files/chk-sha256sum.sh
+      dest: /root/kvm/chk-sha256sum.sh
+      mode: 0755
+
+  - name: sha256sum isoのチェック
+    command: /root/kvm/chk-sha256sum.sh /tmp/rhel-server-7.3-x86_64-dvd.iso 120acbca7b3d55465eb9f8ef53ad7365f2997d42d4f83d7cc285bf5c71e1131f
+
+  - name: install.shのコピー
+    copy:
+      src: ../files/install.sh
+      dest: /root/kvm/install.sh
+      mode: 0755
+
+  - name: host_only.xmlのコピー
+    copy:
+      src: ../files/host_only.xml
+      dest: /root/kvm/host_only.xml
+      mode: 0644
+
+  - name: setup.sh
+    copy:
+      src: ../files/setup.sh
+      dest: /root/kvm/setup.sh
+      mode: 0755
+

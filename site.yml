@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  become: no
+
+  tasks:
+    - import_tasks: roles/common/tasks/setup-init.yml
+    - import_tasks: roles/common/tasks/setup-virtualization.yml
+    - import_tasks: roles/common/tasks/redhat.yml

@@ -1,0 +1,10 @@
+---
+
+  - name: yum install tigervnc-server
+    yum: name=tigervnc-server state=latest
+  - name: yum install curl
+    yum: name=curl state=latest
+  - name: yum install git
+    yum: name=git state=latest
+  - name: yum install hdparm
+    yum: name=hdparm state=latest
